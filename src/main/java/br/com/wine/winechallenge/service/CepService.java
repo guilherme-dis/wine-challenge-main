@@ -19,7 +19,6 @@ public class CepService {
     public CepDTO getCep(String cep) {
 
         CepDAO cepDAO = new CepDAO();
-
         Cep persistedObject = cepDAO.findOne(cep);
 
         if (persistedObject == null) {
@@ -46,7 +45,7 @@ public class CepService {
 
             if (Objects.equals(city.getUf(), uf.get())) {
                 ceps = city.getCep();
-            }else{
+            } else {
                 return ResponseEntity.notFound().build();
             }
 

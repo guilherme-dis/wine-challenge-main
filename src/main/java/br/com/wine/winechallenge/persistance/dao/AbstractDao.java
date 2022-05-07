@@ -21,7 +21,6 @@ public abstract class AbstractDao<T extends Serializable> {
 
     private Class<T> clazz;
 
-    //@Autowired
     protected SessionFactory sessionFactory;
 
     protected final void setClazz(final Class<T> clazzToSet) {
@@ -29,21 +28,19 @@ public abstract class AbstractDao<T extends Serializable> {
     }
 
     public T findOne(final long id) {
-
-
         return (T) getCurrentSession().get(clazz, id);
     }
 
     public T findOne(final String id) {
         Session s = getCurrentSession();
         s.beginTransaction();
-        return (T) s.get(Cep.class, id);
+        return (T) s.get(clazz, id);
     }
 
     public T findByCitY(final String ibge) {
         Session s = getCurrentSession();
         s.beginTransaction();
-        return (T) s.get(Cidade.class, ibge);
+        return (T) s.get(clazz, ibge);
     }
 
     @SuppressWarnings("unchecked")

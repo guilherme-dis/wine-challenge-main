@@ -29,7 +29,7 @@ public class ViaCEPConsultaService {
 
         if (cep.length() != 8) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"erro\"" + ":" + "\"CEP inválido\"}");
-        } else if(cep.matches("[A-Z][a-z]*")) {
+        } else if (cep.matches("[A-Z][a-z]*")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"erro\"" + ":" + "\"CEP é composto por letras\"}");
         }
 

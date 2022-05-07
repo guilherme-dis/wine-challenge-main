@@ -19,21 +19,18 @@ import java.util.Optional;
 public class HomeController {
 
     @Autowired
-	private final CepService cepService;
-    
-	public HomeController(CepService cepService) {
-		super();
-		this.cepService = cepService;
-	}
+    private CepService cepService;
 
-	@GetMapping("/cep/{cep}")
+    @GetMapping("/cep/{cep}")
     @ResponseBody
-    public CepDTO getCep(@PathVariable("cep")String cep ) {
-    	 return cepService.getCep(cep);
+    public CepDTO getCep(@PathVariable("cep") String cep) {
+        return cepService.getCep(cep);
     }
 
-
-	@GetMapping("/ceps")
-	public ResponseEntity<List<CepDTO>> findCEPByIBGECodeAndUF(@RequestParam String ibge,
-															  @RequestParam Optional<String> uf) {return cepService.findCEPByIBGECodeAndUF(ibge,uf);}
+    @GetMapping("/ceps")
+    @ResponseBody
+    public ResponseEntity<List<CepDTO>> findCEPByIBGECodeAndUF(@RequestParam String ibge,
+                                                               @RequestParam Optional<String> uf) {
+        return cepService.findCEPByIBGECodeAndUF(ibge, uf);
+    }
 }

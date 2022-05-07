@@ -4,4 +4,8 @@ import br.com.wine.winechallenge.persistance.model.Cep;
 
 public class CepDAO extends AbstractDao<Cep>{
 
+    public CepDAO() {
+        setClazz(Cep.class);
+    }
+
 }
