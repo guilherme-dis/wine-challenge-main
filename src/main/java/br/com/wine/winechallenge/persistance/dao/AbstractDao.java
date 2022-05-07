@@ -37,11 +37,7 @@ public abstract class AbstractDao<T extends Serializable> {
         return (T) s.get(clazz, id);
     }
 
-    public T findByCitY(final String ibge) {
-        Session s = getCurrentSession();
-        s.beginTransaction();
-        return (T) s.get(clazz, ibge);
-    }
+
 
     @SuppressWarnings("unchecked")
     public List<T> findAll() {

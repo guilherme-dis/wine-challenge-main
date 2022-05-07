@@ -41,7 +41,7 @@ public class CepService {
 
 
         if (uf.isPresent()) {
-            Cidade city = cidadeDAO.findByCitY(ibge);
+            Cidade city = cidadeDAO.findOne(ibge);
 
             if (Objects.equals(city.getUf(), uf.get())) {
                 ceps = city.getCep();
@@ -50,7 +50,7 @@ public class CepService {
             }
 
         } else {
-            ceps = cidadeDAO.findByCitY(ibge).getCep();
+            ceps = cidadeDAO.findOne(ibge).getCep();
         }
 
         for (Cep entity : ceps) {
