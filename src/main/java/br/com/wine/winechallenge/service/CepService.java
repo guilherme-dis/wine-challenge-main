@@ -1,56 +1,64 @@
 package br.com.wine.winechallenge.service;
 
-import br.com.wine.winechallenge.consumer.dto.viacep.ViaCepDTO;
 import br.com.wine.winechallenge.persistance.dao.CepDAO;
 import br.com.wine.winechallenge.persistance.dao.CidadeDAO;
 import br.com.wine.winechallenge.persistance.dto.response.CepDTO;
 import br.com.wine.winechallenge.persistance.model.Cep;
 import br.com.wine.winechallenge.persistance.model.Cidade;
-import br.com.wine.winechallenge.service.callbacks.CepConsultaService;
-import org.springframework.stereotype.Component;
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CepService {
-	
-	
-	public CepDTO getCep(String cep) {
-		
-		CepDAO cepDAO= new CepDAO();
 
-		Cep persistedObject =cepDAO.findOne(cep);
 
-		if(persistedObject == null){
-			CepConsultaService cepConsultaService = new CepConsultaService();
+    public CepDTO getCep(String cep) {
 
-			ViaCepDTO viaCepDTO = cepConsultaService.viaCepConsultaSaida(cep);
+        CepDAO cepDAO = new CepDAO();
 
-			Cep entity = new Cep();
+        Cep persistedObject = cepDAO.findOne(cep);
 
-			entity.setCep(cep);
-			entity.setBairro(viaCepDTO.getBairro());
-			entity.setComplemento(viaCepDTO.getComplemento());
-			entity.setLogradouro(viaCepDTO.getLogradouro());
-			entity.setCidade(new Cidade(viaCepDTO.getIbge(), viaCepDTO.getUf(), viaCepDTO.getLocalidade()));
+        if (persistedObject == null) {
+            ViaCEPConsultaService awesomeApiConsultaService = new ViaCEPConsultaService();
 
-			persistedObject = cepDAO.create(entity);
-		}
-		
-		return persistedObject.toDTO();
-	}
-	public List<CepDTO> findCEPByIBGECodeAndUF(String ibge, String uf) {
-		List<CepDTO> dtos = new ArrayList<>();
+            ResponseEntity<?> dto = awesomeApiConsultaService.consultaCep(cep);
+            Cep entity = (Cep) dto.getBody();
 
-		CidadeDAO cidadeDAO = new CidadeDAO();
+            persistedObject = cepDAO.create(entity);
+        }
 
-		//List<Cidade> persistedObjects = cidadeDAO.
+        return persistedObject.toDTO();
+    }
 
-//		for (Cep entity: entities) {
-//			dtos.add(convertFromEntity(entity));
-//		}
+    public ResponseEntity<List<CepDTO>> findCEPByIBGECodeAndUF(String ibge, Optional<String> uf) {
 
-		return dtos;
-	}
+        List<CepDTO> dtos = new ArrayList<>();
+        List<Cep> ceps = new ArrayList<>();
+        CidadeDAO cidadeDAO = new CidadeDAO();
+
+
+        if (uf.isPresent()) {
+            Cidade city = cidadeDAO.findByCitY(ibge);
+
+            if (Objects.equals(city.getUf(), uf.get())) {
+                ceps = city.getCep();
+            }else{
+                return ResponseEntity.notFound().build();
+            }
+
+        } else {
+            ceps = cidadeDAO.findByCitY(ibge).getCep();
+        }
+
+        for (Cep entity : ceps) {
+            dtos.add(entity.toDTO());
+        }
+
+        return ResponseEntity.ok(dtos);
+    }
 
 }

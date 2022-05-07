@@ -1,6 +1,7 @@
 package br.com.wine.winechallenge.persistance.dao;
 
 import br.com.wine.winechallenge.persistance.model.Cep;
+import br.com.wine.winechallenge.persistance.model.Cidade;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import org.hibernate.HibernateException;
@@ -35,13 +36,14 @@ public abstract class AbstractDao<T extends Serializable> {
 
     public T findOne(final String id) {
         Session s = getCurrentSession();
-        //Transaction trans =
         s.beginTransaction();
-
-        // s.close();
-        // trans.begin();
-
         return (T) s.get(Cep.class, id);
+    }
+
+    public T findByCitY(final String ibge) {
+        Session s = getCurrentSession();
+        s.beginTransaction();
+        return (T) s.get(Cidade.class, ibge);
     }
 
     @SuppressWarnings("unchecked")
@@ -99,10 +101,7 @@ public abstract class AbstractDao<T extends Serializable> {
 
     protected Session getCurrentSession() {
         try {
-
-            // return sessionFactory.getCurrentSession();
             return HibernateUtil.getSessionFactory().getCurrentSession();
-            //  return sessionFactory.getCurrentSession();
         } catch (HibernateException e) {
             return sessionFactory.openSession();
         }

@@ -49,6 +49,14 @@ public class Cidade implements Serializable {
 		this.localidade = localidade;
 	}
 
+	public List<Cep> getCep() {
+		return cep;
+	}
+
+	public void setCep(List<Cep> cep) {
+		this.cep = cep;
+	}
+
 	public Cidade(String ibge, String uf, String localidade, List<Cep> cep) {
 		this.ibge = ibge;
 		this.uf = uf;
