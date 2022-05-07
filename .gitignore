@@ -1,0 +1,31 @@
+.maven
+target/
+MANIFEST.MF
+
+# arquivos nativos mac
+.DS_Store
+Thumbs.db
+
+# arquivos gerais
+*.factorypath
+*.swp
+*.swo
+*.swm
+*.swn
+*.pyc
+*.log
+*.class
+*.ast
+*.jasper
+*.jar
+*.war
+*.ear
+.classpath
+.project
+.settings
+.checkstyle
+.pmd
+.springBeans
+.metadata/
+.sonarlint/*
+.idea/*

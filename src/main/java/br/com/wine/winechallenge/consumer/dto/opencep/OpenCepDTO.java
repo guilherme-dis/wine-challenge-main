@@ -1,0 +1,107 @@
+package br.com.wine.winechallenge.consumer.dto.opencep;
+
+import org.springframework.lang.Nullable;
+
+import java.io.Serializable;
+
+public class OpenCepDTO implements Serializable {
+    private String cep;
+    private String logradouro;
+    private String complemento;
+    private String bairro;
+    private String localidade;
+    private String uf;
+    private String ibge;
+
+    @Nullable
+    private String categoria;
+    @Nullable
+    private String origem;
+    @Nullable
+    private String erro;
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getLogradouro() {
+        return logradouro;
+    }
+
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getLocalidade() {
+        return localidade;
+    }
+
+    public void setLocalidade(String localidade) {
+        this.localidade = localidade;
+    }
+
+    public String getUf() {
+        return uf;
+    }
+
+    public void setUf(String uf) {
+        this.uf = uf;
+    }
+
+    public String getIbge() {
+        return ibge;
+    }
+
+    public void setIbge(String ibge) {
+        this.ibge = ibge;
+    }
+
+    @Nullable
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(@Nullable String categoria) {
+        this.categoria = categoria;
+    }
+
+    @Nullable
+    public String getOrigem() {
+        return origem;
+    }
+
+    public void setOrigem(@Nullable String origem) {
+        this.origem = origem;
+    }
+
+    @Nullable
+    public String getErro() {
+        return erro;
+    }
+
+    public void setErro(@Nullable String erro) {
+        this.erro = erro;
+    }
+}
+
+
