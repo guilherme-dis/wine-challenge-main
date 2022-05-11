@@ -27,14 +27,14 @@ public abstract class AbstractDao<T extends Serializable> {
         clazz = Preconditions.checkNotNull(clazzToSet);
     }
 
-    public T findOne(final long id) {
-        return (T) getCurrentSession().get(clazz, id);
-    }
+//    public T findOne(final long id) {
+//        return (T) getCurrentSession().get(clazz, id);
+//    }
 
-    public T findOne(final String id) {
+    public T findOne(final Object id) {
         Session s = getCurrentSession();
         s.beginTransaction();
-        return (T) s.get(clazz, id);
+        return (T) s.get(clazz, (Serializable) id);
     }
 
 
@@ -47,13 +47,10 @@ public abstract class AbstractDao<T extends Serializable> {
     public T create(final T entity) {
         Preconditions.checkNotNull(entity);
         Session s = getCurrentSession();
-
         Transaction trans = s.getTransaction();
         getCurrentSession().saveOrUpdate(entity);
         trans.commit();
-
         s.close();
-
         return entity;
     }
 
